@@ -13,7 +13,10 @@ pipeline {
         stage("Build and push docker") {
             steps {
                 script {
-                    docker.build('swails/clock:${imageTag}', '-f Dockerfile .')
+                    def app = docker.build("swails/clock:${imageTag}", "-f Dockerfile .")
+                    docker.withRegistry("https://hub.docker.com", "docker-creds") {
+                        app.push("$imageTag")
+                    }
                 }
             }
         }
