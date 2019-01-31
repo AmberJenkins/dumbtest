@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage("Build and push docker") {
             steps {
-                docker.build('swails/clock:first-pass', '-f Dockerfile .')
+                script {
+                    docker.build('swails/clock:first-pass', '-f Dockerfile .')
+                }
             }
         }
     }
