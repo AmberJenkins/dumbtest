@@ -6,7 +6,7 @@ pipeline {
         stage("Update the tag") {
             steps {
                 script {
-                    imageTag = '${BRANCH_NAME}'
+                    imageTag = imageTagMap("$BRANCH_NAME")
                 }
             }
         }
@@ -18,4 +18,14 @@ pipeline {
             }
         }
     }
+}
+
+def imageTagMap(String branchName) {
+    if (branchName == "master") {
+        return "stage"
+    }
+    if (branchName == "develop") {
+        return "dev"
+    }
+    return branchName
 }
