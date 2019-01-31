@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("swails/clock:${imageTag}", "-f Dockerfile .")
-                    docker.withRegistry("https://hub.docker.com", "docker-creds") {
+                    docker.withRegistry("", "docker-creds") {
                         app.push("$imageTag")
                     }
                 }
