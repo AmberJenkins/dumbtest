@@ -2,6 +2,9 @@ def imageTag = 'dummy'
 
 pipeline {
     agent { label 'docker' }
+    parameters {
+        booleanParam defaultValue: false, description: 'Tag production', name: 'PRODUCTION'
+    }
     stages {
         stage("Update the tag") {
             steps {
@@ -25,6 +28,9 @@ pipeline {
 
 def imageTagMap(String branchName) {
     if (branchName == "master") {
+        if (env.PRODUCTION.toBoolean()) {
+            return "prod"
+        }
         return "stage"
     }
     if (branchName == "develop") {
